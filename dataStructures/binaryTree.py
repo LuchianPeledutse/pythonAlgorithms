@@ -1,4 +1,5 @@
 import numpy as np
+from typing import List
 
 
 
@@ -69,7 +70,18 @@ class BinaryTree:
             Binary node to start from
         """
         return 0 if node == None else 1 + max(self.tree_depth(node.left), self.tree_depth(node.right))
-        
+    
+    def get_leafs(self, node: BinaryNode, leaf_list: List | None = None) -> List:
+        assert node != None, 'Node is None'
+        if leaf_list == None:
+            leaf_list = []
+
+        if node.left == None and node.right == None:
+            leaf_list.append(node)
+        else:
+            for not_none_node in filter(None, (node.left, node.right)):
+                self.get_leafs(not_none_node, leaf_list=leaf_list)
+            return leaf_list
 
 
 
@@ -94,7 +106,6 @@ if __name__ == "__main__":
     print(binarytree.root.right.data, end = '\n\n')
     binarytree.inorder_walk(binarytree.root)
     print(binarytree.search(binarytree.root, 8.15).key, end = '\n\n')
-    print(binarytree.tree_depth(binarytree.root))
-
-
+    print(binarytree.tree_depth(binarytree.root), end = '\n\n')
+    print([item.key for item in binarytree.get_leafs(binarytree.root)])
 '--------------------------------------------------------------------------------'
