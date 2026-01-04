@@ -52,6 +52,23 @@ class BinaryTree:
                 parent.left = insert_node
             elif insert_node.key >= parent.key:
                 parent.right = insert_node
+    
+    def search(self, node: BinaryNode, key: int | float):
+        if node == None or node.key == key:
+            return node
+        else:
+            return self.search(node.left, key) if key < node.key else self.search(node.right, key)
+    
+    def tree_depth(self, node: BinaryNode) -> int:
+        """
+        Returns the depth of the tree starting from node
+
+        Args
+        ----
+        node: BinaryNode
+            Binary node to start from
+        """
+        return 0 if node == None else 1 + max(self.tree_depth(node.left), self.tree_depth(node.right))
         
 
 
@@ -59,16 +76,25 @@ class BinaryTree:
 
 if __name__ == "__main__":
     root = BinaryNode(8, {"Luchian": 21, "Evelina": 11})
-    left_child = BinaryNode(3.14, {"Vitalie": 49})
-    right_child = BinaryNode(8.15, {"Luchiya": 39})
+    l = BinaryNode(3.14, {"Vitalie": 49})
+    r = BinaryNode(8.15, {"Luchiya": 39})
+    rr = BinaryNode(9, {})
+    ll = BinaryNode(2, {})
+    llr = BinaryNode(2.5, {})
 
     binarytree = BinaryTree(root=root)
-    binarytree.tree_insert(binarytree, left_child)
-    binarytree.tree_insert(binarytree, right_child)
+    binarytree.tree_insert(binarytree, l)
+    binarytree.tree_insert(binarytree, r)
+    binarytree.tree_insert(binarytree, rr)
+    binarytree.tree_insert(binarytree, ll)
+    binarytree.tree_insert(binarytree, llr)
+
     print(binarytree.root.data)
     print(binarytree.root.left.data)
     print(binarytree.root.right.data, end = '\n\n')
     binarytree.inorder_walk(binarytree.root)
+    print(binarytree.search(binarytree.root, 8.15).key, end = '\n\n')
+    print(binarytree.tree_depth(binarytree.root))
 
 
 '--------------------------------------------------------------------------------'
