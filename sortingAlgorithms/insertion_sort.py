@@ -7,7 +7,8 @@ import random
 
 
 def insertion_sort(the_list: List, list_length: int):
-    assert list_length >= 2, "Length of list has to be greater than 2"
+    if list_length == 1:
+        return
     for ind in range(1, list_length):
         key = the_list[ind]
         j = ind - 1
